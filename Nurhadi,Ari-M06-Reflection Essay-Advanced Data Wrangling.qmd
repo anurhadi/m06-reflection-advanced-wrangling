@@ -1,0 +1,261 @@
+---
+title: "M06-Reflection Essay-Advanced Data Wrangling"
+author: "Ari Nurhadi"
+date: '`r format(Sys.time())`'
+format: 
+  html: 
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    code-link: true
+    embed-resources: true
+editor: visual
+execute: 
+  freeze: auto
+editor_options: 
+  chunk_output_type: console
+---
+
+# Tidyverse Tricks
+
+## Prompt
+
+Summarize what you learned about Tidyverse tricks presented in Step 1 by focusing on the new things you learned that were not dealt with in M05.
+
+## Response
+
+In Step 1, I watched David Robinson’s talk titled *“Ten Tremendous Tricks in the Tidyverse.”* The video demonstrated several efficient techniques for data wrangling and visualization using packages in the Tidyverse ecosystem.
+
+One of the main ideas presented in the video is that the Tidyverse provides a consistent grammar for data manipulation and exploration. Instead of writing long or complicated code, many operations can be performed using pipelines that connect multiple steps together.
+
+One new trick I learned was using the `count()` function to quickly summarize how many observations appear in each category. This is a very convenient shortcut compared with manually using `group_by()` and `summarise()`.
+
+```{r}
+library(dplyr)
+starwars %>% 
+  count(species, sort = TRUE)
+```
+
+Another useful technique demonstrated in the video is reordering factor levels using the `forcats` package. For example, the `fct_reorder()` function can be used to reorder categories based on numeric values so that plots appear more organized.
+
+```{r}
+library(forcats)
+library(ggplot2)
+
+starwars %>%
+  count(species) %>%
+  mutate(species = fct_reorder(species, n)) %>%
+  ggplot(aes(species, n)) +
+  geom_col() +
+  coord_flip()
+```
+
+This technique makes visualizations much easier to interpret because the categories are sorted by frequency rather than alphabetically.
+
+Another idea that stood out to me was the importance of **quick exploratory analysis**. Robinson demonstrates how data scientists often explore unfamiliar datasets using quick summaries and plots before performing deeper analysis. This approach helps identify patterns, errors, or interesting relationships in the data.
+
+Compared with what we learned in Module 05, this video introduced more advanced and efficient ways to manipulate and visualize data. While M05 focused mainly on the basic functions such as `filter()`, `select()`, and `mutate()`, this step emphasized combining multiple Tidyverse tools to streamline the workflow and improve productivity.
+
+# Reflection on David Robinson's Screencast
+
+## Prompt
+
+What do you think about David Robinson's impromptu screencast performance in Step 2? How much were you able to understand?
+
+## Response
+
+In Step 2, I watched David Robinson perform a live Tidy Tuesday screencast where he analyzed a dataset on European energy production using R. What made the screencast impressive was that he explored the dataset without seeing it in advance and performed the entire analysis live using the Tidyverse ecosystem.
+
+Robinson demonstrated a typical workflow used by data scientists when exploring a new dataset. He began by importing the data and examining its structure to understand the variables available. After that, he used functions from packages such as **dplyr**, **tidyr**, and **ggplot2** to clean the data, summarize key variables, and generate visualizations. This process illustrated how exploratory data analysis is often iterative, where analysts continuously transform the data and create plots to better understand patterns and relationships.
+
+One thing that stood out to me was the speed and fluency with which Robinson used the Tidyverse tools. He frequently used pipelines (`%>%`) to connect multiple data transformation steps together, which made the workflow efficient and readable. Even though he was working quickly, his code was still structured and logical.
+
+While watching the video, I was able to understand the general workflow and many of the functions he used. However, some parts were difficult to follow because he wrote the code very quickly and occasionally used functions that were unfamiliar to me. Despite this challenge, the screencast was still valuable because it showed how experienced data scientists think through problems and explore datasets in real time.
+
+Overall, the screencast helped me see how the wrangling tools we are learning in this course can be applied in a real data analysis setting. It also motivated me to continue improving my skills with the Tidyverse so that I can eventually analyze data more efficiently.
+
+# Data Cleaning Process
+
+## Prompt
+
+In Step 3, you saw two videos, one showing initial data cleaning and the other showing further cleaning. Describe the two processes. What are the big differences between the two? How do the differences result in the differences in final sample size?
+
+## Response
+
+In Step 3, the module presented two videos demonstrating different stages of the data cleaning process. The first video focused on **initial data cleaning**, while the second video showed **further data cleaning and refinement** of the dataset.
+
+### Initial Data Cleaning
+
+The first stage focused on preparing the dataset so that it could be analyzed. At this stage, the goal was to identify and fix structural issues in the raw data. Tasks performed during this process included examining the structure of the dataset, identifying missing values, and ensuring that variables were in the correct format.
+
+Initial cleaning is important because real-world data often contains inconsistencies such as incomplete records, incorrect variable types, or formatting issues. By addressing these problems early, analysts can ensure that the dataset is usable for further analysis.
+
+### Further Data Cleaning
+
+The second video focused on additional transformations that refine the dataset and make it more suitable for analysis. This stage involved filtering observations, creating or modifying variables, and removing rows that did not meet the criteria for the analysis.
+
+This stage typically reduces the number of observations in the dataset because rows that contain missing values or irrelevant information are removed. The goal is to create a dataset that accurately represents the population or sample being studied.
+
+### Differences Between the Two Processes
+
+The main difference between the two stages is their purpose. Initial data cleaning focuses on **fixing structural problems in the raw dataset**, while further data cleaning focuses on **preparing the data specifically for analysis**.
+
+Another difference is that the first stage usually keeps most of the data while correcting issues, whereas the second stage often **filters out observations that do not meet certain conditions**.
+
+### Impact on Final Sample Size
+
+Because the second stage applies stricter criteria when selecting observations, the final dataset often becomes smaller. Rows with missing values, incomplete information, or irrelevant variables may be removed during the filtering process. As a result, the final sample size reflects only the observations that meet the requirements of the analysis.
+
+# Revealjs Presentation
+
+## Prompt
+
+In Step 4, you learned how to create a Revealjs presentation. What's your impression of the Revealjs presentation? Describe its capabilities as you learned from the video. What are its strengths and weaknesses compared with PPT?
+
+## Response
+
+In Step 4, I learned how to create a Revealjs presentation using Quarto. My impression of Revealjs is that it is a powerful tool for presenting data analysis because it combines slides, code, and web publishing in a single workflow. Instead of manually copying figures and results into slides, Revealjs allows the presentation to be generated directly from the analysis document. This makes the presentation reproducible and easier to update when the underlying data changes.
+
+One of the most interesting capabilities of Revealjs is that presentations can be written using Markdown syntax while still allowing code execution. This means that R code, visualizations, and tables can be embedded directly into slides. Revealjs presentations are also interactive and web-based, which allows them to include features such as slide navigation, transitions, and HTML formatting. Another useful capability is that the presentations can be published online as a website, making it easy to share them through a link.
+
+Compared with PowerPoint, Revealjs has several strengths. First, it supports reproducible research because the analysis and presentation are created in the same document. Second, it integrates well with R and other programming languages used for data analysis. Third, it allows presentations to be published easily on the web, which makes sharing and collaboration more convenient.
+
+However, Revealjs also has some weaknesses compared with PowerPoint. Creating Revealjs presentations requires some knowledge of Markdown and coding, which may be challenging for beginners. In addition, PowerPoint provides more built-in design tools, animations, and templates that make it easier to create visually complex slides quickly.
+
+Overall, Revealjs is a very useful presentation tool for data science and research because it allows analysts to integrate their code, results, and presentation into a single reproducible document.
+
+# Step 5 – My Revealjs Presentation
+
+## Prompt
+
+In Step 5, you were asked to create a Revealjs presentation. Provide a link to the presentation you published on the web. Briefly describe what the presentation is about. What did you learn about the Revealjs presentation from the experience?
+
+## Response
+
+For this step, I created a Revealjs presentation using Quarto and published it on the web.
+
+**Presentation Link:**\
+[View my Revealjs Presentation](https://anurhadi.github.io/m06-1-website-proposal/)
+
+The presentation introduces my proposal for a professional portfolio website. In the slides, I explained the purpose of the website, the planned structure of its pages, and the types of content that will be included. The proposed website will contain a home page, project pages that showcase data-related work, a dashboard page, a Revealjs presentation page, and an analytics page that presents insights from website traffic data. The goal of the website is to organize my academic projects and technical work in a way that can be shared with potential employers.
+
+Through this experience, I learned how Revealjs presentations can be created directly from Quarto documents using Markdown. I also learned how slides can incorporate different elements such as incremental lists, columns, speaker notes, and custom styling. Another important lesson was learning how to publish the presentation online using GitHub Pages, which allows the presentation to be easily shared through a link.
+
+Overall, creating this presentation helped me understand how Quarto can be used not only for reports but also for professional presentations that combine storytelling, data analysis, and web publishing.
+
+# New Wrangling Concepts from the Advanced Wrangling Lecture
+
+## Prompt
+
+My advanced wrangling lecture in Step 6 introduced new concepts not covered in M05, such as joining relational databases. Pick three of them, describe when to use them, and give one coding example along with an output for each function. To clarify, you are expected to do literate programming by weaving your narratives with the code.
+
+## Response
+
+In Step 6, I learned several new wrangling concepts that go beyond the more basic data manipulation tools from M05. The lecture introduced topics such as relational joins, column-wise operations with `across()`, and conditional transformations with `case_when()`. These tools are useful because they allow analysts to work more efficiently with complex datasets.
+
+Below, I discuss three functions that stood out to me and explain when to use each one.
+
+## 1. `left_join()`
+
+### When to use it
+
+I would use `left_join()` when I have two related tables and want to keep all rows from the main table while adding matching information from another table. This is useful when one dataset contains the main observations and the second dataset contains extra variables that should be attached using a shared key.
+
+```{r}
+library(tidyverse)
+
+students <- tibble(
+  id = c(1, 2, 3),
+  name = c("Alice", "Bob", "Charlie")
+)
+
+scores <- tibble(
+  id = c(1, 2),
+  score = c(90, 85)
+)
+
+left_join(students, scores, by = "id")
+```
+
+The output shows that all rows from `students` are preserved. The matching scores are added where possible, and unmatched cases receive `NA`.
+
+## 2. `across()`
+
+### When to use it
+
+I would use `across()` when I want to apply the same function to multiple columns at once. This is especially helpful when working with several numeric variables and I want to summarize or transform them without repeating code.
+
+```{r}
+library(tidyverse)
+
+mini_df <- tibble(
+  group = c("A", "A", "B", "B"),
+  x = c(10, 20, 30, 40),
+  y = c(1, 2, 3, 4)
+)
+
+mini_df %>%
+  group_by(group) %>%
+  summarise(across(c(x, y), mean))
+```
+
+The output gives the mean of both numeric columns for each group. This makes the code shorter and easier to read than writing each summary separately.
+
+## 3. `case_when()`
+
+### When to use it
+
+I would use `case_when()` when I need to create a new categorical variable based on multiple conditions. It is much clearer than writing long nested `ifelse()` statements, especially when there are several categories.
+
+```{r}
+library(tidyverse)
+
+scores2 <- tibble(
+  student = c("A", "B", "C", "D"),
+  score = c(95, 82, 74, 60)
+)
+
+scores2 %>%
+  mutate(
+    performance = case_when(
+      score >= 90 ~ "Excellent",
+      score >= 80 ~ "Good",
+      score >= 70 ~ "Satisfactory",
+      TRUE ~ "Needs Improvement"
+    )
+  )
+```
+
+The output creates a new variable called `performance` that classifies each student into a performance category. I find this function useful because it makes conditional logic more readable and organized.
+
+# What I Enjoyed Most About Data Wrangling
+
+## Prompt
+
+Data wrangling is like laying a foundation or basement for a building, while visualization is building the structure above it. What did you like the most about working with the tools you learned in this module?
+
+## Response
+
+What I enjoyed most about working with the wrangling tools in this module was how powerful and organized the Tidyverse workflow feels. Functions from packages such as **dplyr** and **tidyr** make it possible to transform and prepare data using clear and readable steps. The pipe operator (`%>%`) was particularly helpful because it allowed me to structure my code as a sequence of logical operations rather than writing complex nested commands.
+
+Another aspect I liked was how flexible the wrangling tools are when working with real-world datasets. In many cases, raw data is messy, incomplete, or structured in ways that make analysis difficult. Tools such as `mutate()`, `across()`, and join functions make it possible to reshape and combine datasets efficiently. This process made me realize how important data preparation is before any visualization or analysis can be performed.
+
+Overall, I found data wrangling interesting because it feels like solving a puzzle. Each function helps transform the data step by step until it becomes structured and ready for analysis. Even though this stage of analysis happens behind the scenes, it is essential for producing reliable and meaningful results.
+
+# Challenges in Learning Data Wrangling
+
+## Prompt
+
+What seems to be the challenge, if any, for you when you try to master the wrangling tools? How may you be able to overcome the challenge?
+
+## Response
+
+One of the main challenges I experienced when learning the wrangling tools was remembering the large number of functions available in the Tidyverse ecosystem. Each function serves a specific purpose, and at first it can be difficult to know which function should be used in different situations. For example, there are multiple join functions, transformation functions, and summarization tools that perform similar but slightly different tasks.
+
+Another challenge was understanding how experienced programmers combine multiple functions together efficiently. Watching demonstrations such as David Robinson’s screencast made me realize that advanced users can write code very quickly by chaining together several operations. At the beginning, it was sometimes difficult for me to follow the logic behind these workflows.
+
+To overcome these challenges, I plan to continue practicing with real datasets and reviewing the documentation for the Tidyverse packages. Rewatching coding demonstrations and trying to reproduce the code myself can also help reinforce the concepts. As I become more familiar with the tools, I expect that choosing the appropriate functions and structuring workflows will become more intuitive.
+
+# Published Report
+
+This reflection report is published online at:
